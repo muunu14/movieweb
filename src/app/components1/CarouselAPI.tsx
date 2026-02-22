@@ -14,7 +14,6 @@ export async function CarouselAPI() {
   const data = await response.json();
   return data.results;
 }
-
 export async function seeMovieTrailer(movieId: number) {
   const res = await fetch(
     `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
@@ -25,31 +24,12 @@ export async function seeMovieTrailer(movieId: number) {
       cache: "no-store",
     }
   );
-
   if (!res.ok) return null;
-
   const data = await res.json();
   console.log(data.results);
   const trailer = data.results?.find(
     (item: any) => item.type == "Trailer" && item.site == "YouTube"
   );
-
   console.log(trailer);
-
   return trailer?.key ?? null;
 }
-
-// export async function seeMovieDetail(movieId: string) {
-//   const res = await fetch(
-//     `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
-//     {
-//       headers: {
-//         Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_KEY}`,
-//       },
-//       cache: "no-store",
-//     }
-//   );
-
-//   console.log("Movie API response status:", res.status);
-//   if (!res.ok) return null;
-// }
