@@ -1,5 +1,4 @@
 import React from "react";
-
 export const SectionWrapper = ({
   title,
   action,
@@ -16,7 +15,7 @@ export const SectionWrapper = ({
         {action}
       </div>
 
-      {/* 🔥 GRID layout */}
+
       <div
         className="
           grid

@@ -8,7 +8,7 @@ export const MovieDetails = async () => {
     movieDetailResults: Movie [];
   } = await MovieDetail ();
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-cente r">
         <div className="h-[524px] flex flex-col gap-6">
             
         </div>
