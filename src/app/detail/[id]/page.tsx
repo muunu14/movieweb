@@ -1,4 +1,4 @@
-import { getMovieCredits, Crew } from "../../../../utils/detailsTMDB";
+// import { getMovieCredits, Crew } from "../../../../utils/detailsTMDB";a
 
 export type MovieDetail = {
   id: string;
