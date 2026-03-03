@@ -10,7 +10,6 @@ export async function getGenres() {
       cache: "force-cache",
     },
   );
-
   return res.json();
 }
 

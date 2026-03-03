@@ -1,36 +1,46 @@
 import Link from "next/link";
 import { movieAPI, Movie } from "@/app/components1/SectionAPI";
 import { SeeMore } from "../components/SeeMore";
-import { SectionWrapper } from "./SectionWrapper";
 
 export const Popular = async () => {
   const { popularMovieResults }: { popularMovieResults: Movie[] } =
     await movieAPI("popular");
 
   return (
-    <SectionWrapper
-      title="Popular"
-      action={
+    <div className="w-full px-4 sm:px-8 lg:px-20 py-10">
+      <div className="flex justify-between items-center pb-8">
+        <p className="font-bold text-xl sm:text-2xl">Popular</p>
+
         <Link href="/category/popular">
           <SeeMore />
         </Link>
-      }
-    >
-      {popularMovieResults.slice(0, 10).map((info) => (
-        <Link key={info.id} href={`/detail/${info.id}`}>
-          <div className="bg-[#F4F4F5] rounded-lg">
-            <img
-              src={`https://image.tmdb.org/t/p/w500${info.poster_path}`}
-              alt={info.title}
-              className="h-[320px] w-[230px] rounded-lg hover:scale-105 transition"
-            />
-            <p className="flex items-center gap-1 pt-2 pl-2 text-sm">
-              ⭐ {info.vote_average.toFixed(1)} /10
-            </p>
-            <p className="p-2 text-sm">{info.title}</p>
-          </div>
-        </Link>
-      ))}
-    </SectionWrapper>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        {popularMovieResults.slice(0, 10).map((info) => (
+          <Link key={info.id} href={`/detail/${info.id}`}>
+            <div className="bg-[#F4F4F5] rounded-lg overflow-hidden hover:shadow-lg transition duration-300">
+              <img
+                src={`https://image.tmdb.org/t/p/w500${info.poster_path}`}
+                alt={info.title}
+                className="w-full h-[320px] sm:h-[340px] md:h-[360px] object-cover hover:scale-105 transition-transform duration-300"
+              />
+
+              <div className="p-3">
+                <p className="flex items-center gap-1 text-sm">
+                  <img src="/Star.png" alt="" className="h-4 w-4" />
+                  {info.vote_average.toFixed(1)}
+                  <span className="text-gray-500 text-xs">/10</span>
+                </p>
+
+                <p className="pt-2 text-sm sm:text-base font-medium line-clamp-2">
+                  {info.title}
+                </p>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 };
