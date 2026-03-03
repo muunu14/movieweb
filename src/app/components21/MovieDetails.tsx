@@ -1,11 +1,10 @@
-import { MovieDetail } from "@/app/components1/SectionAPI";
+import { MovieDetail } from "@/app/components21/SectionAPI";
 
 interface Params {
   params: { id: string };
 }
 
 export default async function DetailPage({ params }: Params) {
-
   const movie = await MovieDetail(params.id);
 
   if (!movie) return <div>Movie not found</div>;
@@ -19,7 +18,9 @@ export default async function DetailPage({ params }: Params) {
         className="w-80 rounded-lg"
       />
       <p className="text-gray-700 mt-4">{movie.overview}</p>
-      <p className="text-lg font-semibold mt-2">Rating: {movie.vote_average}/10</p>
+      <p className="text-lg font-semibold mt-2">
+        Rating: {movie.vote_average}/10
+      </p>
     </div>
   );
 }

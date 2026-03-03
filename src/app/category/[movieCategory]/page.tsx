@@ -1,4 +1,4 @@
-import { movieAPI, Movie } from "@/app/components1/SectionAPI";
+import { movieAPI, Movie } from "@/app/components21/SectionAPI";
 import Link from "next/link";
 export default async function Page({
   params,

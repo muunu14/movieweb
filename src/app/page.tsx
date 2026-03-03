@@ -1,6 +1,6 @@
-import { CarouselAPI } from "./components1/CarouselAPI";
-import { PlayCarousel } from "./components1/PlayCarousel";
-import { MovieCard } from "./components1/MovieCard";
+import { CarouselAPI } from "./components21/CarouselAPI";
+import { PlayCarousel } from "./components21/PlayCarousel";
+import { MovieCard } from "./components21/MovieCard";
 
 export default async function Home() {
   const movies = await CarouselAPI();

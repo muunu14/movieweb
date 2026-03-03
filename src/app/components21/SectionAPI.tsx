@@ -1,9 +1,14 @@
 export type Movie = {
-  title: string;
-  star: string;
-  vote_average: number;
-  poster_path: string;
   id: number;
+  title: string;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  backdrop_path: string;
+  release_date: string;
+  vote_average: number;
+  interval?: number;
+  genreId?: number;
 };
 
 export const movieAPI = async (category: string) => {

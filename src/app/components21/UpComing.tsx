@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Movie } from "@/app/components1/SectionAPI";
+import { Movie } from "@/app/components21/SectionAPI";
 import { ArrowRight } from "lucide-react";
 
 export const Upcoming = ({
@@ -10,12 +10,11 @@ export const Upcoming = ({
   movieResults = [],
 }: {
   title: string;
-  category: "popular" | "upcoming" | "top_rated"; 
+  category: "popular" | "upcoming" | "top_rated";
   movieResults: Movie[];
 }) => {
   return (
     <div className="w-full max-w-300 mx-auto flex flex-col gap-6">
-
       <div className="flex justify-between items-center">
         <p className="text-[20px] md:text-[24px] font-semibold tracking-tight">
           {title}
@@ -31,8 +30,6 @@ export const Upcoming = ({
           </button>
         </Link>
       </div>
-
-
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
         {movieResults.slice(0, 10).map((movie) => (
           <Link key={movie.id} href={`/movie/${movie.id}`}>
@@ -42,7 +39,7 @@ export const Upcoming = ({
                   src={
                     movie.poster_path
                       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                      : "/no-image.png" 
+                      : "/no-image.png"
                   }
                   alt={movie.original_title}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"

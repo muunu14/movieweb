@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { movieAPI, Movie } from "@/app/components1/SectionAPI";
+import { movieAPI, Movie } from "@/app/components21/SectionAPI";
 import { SeeMore } from "../components/SeeMore";
 
 export const Popular = async () => {
