@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
 import { notFound } from "next/navigation";
+// import { DynamicPagination } from "@/app/_components/DynamicPagination";
 
 export default async function SimilarMoviesPage({
   params,
@@ -67,6 +68,11 @@ export default async function SimilarMoviesPage({
       </div>
 
       <div className="flex py-10">
+        {/* <DynamicPagination
+          totalPage={
+            similar?.total_pages > 500 ? 500 : similar?.total_pages || 1
+          }
+        /> */}
       </div>
     </div>
   );
