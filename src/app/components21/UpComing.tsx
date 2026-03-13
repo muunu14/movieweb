@@ -1,62 +1,45 @@
-"use client";
-
 import Link from "next/link";
-import { Movie } from "@/app/components21/SectionAPI";
-import { ArrowRight } from "lucide-react";
+import { movieApi } from "../../../utils/detailsTMDB";
+import { SeeMore } from "../components/SeeMore";
 
-export const Upcoming = ({
-  title,
-  category,
-  movieResults = [],
-}: {
+type Movie = {
+  id: number;
+  poster_path: string;
   title: string;
-  category: "popular" | "upcoming" | "top_rated";
-  movieResults: Movie[];
-}) => {
+  vote_average: number;
+};
+export const Upcoming = async () => {
+  const data = await movieApi("Upcoming");
+  const upcomingMovieResults: Movie[] = data?.results ?? [];
+
   return (
-    <div className="w-full max-w-300 mx-auto flex flex-col gap-6">
-      <div className="flex justify-between items-center">
-        <p className="text-[20px] md:text-[24px] font-semibold tracking-tight">
-          {title}
-        </p>
-        <Link href={`/category/${category}`}>
-          <button className="flex gap-1 items-center text-sm font-medium opacity-70 hover:opacity-100 transition-all duration-300 hover:translate-x-1 group/btn">
-            See more
-            <ArrowRight
-              width={14}
-              height={14}
-              className="transition-transform duration-300 group-hover/btn:translate-x-1"
-            />
-          </button>
+    <div className="w-full px-4 sm:px-8 lg:px-20 py-10">
+      <div className="flex justify-between items-center pb-8">
+        <p className="font-bold text-xl sm:text-2xl">Upcoming</p>
+
+        <Link href="/category/top_rated">
+          <SeeMore />
         </Link>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
-        {movieResults.slice(0, 10).map((movie) => (
-          <Link key={movie.id} href={`/movie/${movie.id}`}>
-            <div className="group relative rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
-              <div className="relative w-full aspect-2/3 overflow-hidden">
-                <img
-                  src={
-                    movie.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                      : "/no-image.png"
-                  }
-                  alt={movie.original_title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 pb-10">
+        {upcomingMovieResults.slice(0, 10).map((info) => (
+          <Link key={info.id} href={`/detail/${info.id}`}>
+            <div className="bg-[#F4F4F5] rounded-lg overflow-hidden hover:shadow-lg transition duration-300">
+              <img
+                src={`https://image.tmdb.org/t/p/w500${info.poster_path}`}
+                alt={info.title}
+                className="w-full h-[320px] sm:h-[340px] md:h-[360px] object-cover hover:scale-105 transition-transform duration-300"
+              />
 
-              <div className="bg-gray-100 p-3 transition-all duration-500 group-hover:bg-gray-200/80 backdrop-blur-sm">
-                <div className="flex items-center gap-1 mb-1.5 transform transition-transform duration-500 group-hover:translate-x-1">
-                  <img src="/Star.png" alt="star" className="w-3.5 h-3.5" />
-                  <span className="text-[12px] font-bold text-gray-800">
-                    {movie.vote_average ?? "-"}
-                  </span>
-                  <span className="opacity-50 text-[11px]">/10</span>
-                </div>
-                <p className="text-[13px] font-semibold text-gray-900 truncate transition-all duration-500 group-hover:text-indigo-600">
-                  {movie.original_title || movie.title}
+              <div className="p-3">
+                <p className="flex items-center gap-1 text-sm">
+                  <img src="/Star.png" alt="" className="h-4 w-4" />
+                  {info.vote_average.toFixed(1)}
+                  <span className="text-gray-500 text-xs">/10</span>
+                </p>
+
+                <p className="pt-2 text-sm sm:text-base font-medium line-clamp-2">
+                  {info.title}
                 </p>
               </div>
             </div>

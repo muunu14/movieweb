@@ -74,3 +74,22 @@ export async function getSimilarMovies(movieId: number, page: number = 1) {
   );
   return res.json();
 }
+export interface Movie {
+  id: number;
+  title?: string;
+  original_title?: string;
+  poster_path?: string;
+  vote_average?: number;
+  release_date?: string;
+}
+
+export const movieAPI = async (category: string): Promise<Movie[]> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/movie/${category}?api_key=${process.env.TMDB_API_KEY}`,
+  );
+
+  if (!res.ok) throw new Error("Failed to fetch movies");
+
+  const data = await res.json();
+  return data.results;
+};

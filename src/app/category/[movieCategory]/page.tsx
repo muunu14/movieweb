@@ -1,39 +1,75 @@
-import { movieAPI, Movie } from "@/app/components21/SectionAPI";
+import { movieApi } from "../../../../utils/detailsTMDB";
+import Image from "next/image";
 import Link from "next/link";
+
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ movieCategory: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const { movieCategory } = await params;
-  const { popularMovieResults }: { popularMovieResults: Movie[] } =
-    await movieAPI(movieCategory);
+  const { page } = await searchParams;
+  const currentPage = page ? parseInt(page) : 1;
+  const movies: any = await movieApi(movieCategory, currentPage);
+
+  const title = movieCategory.includes("popular")
+    ? "Popular"
+    : movieCategory.includes("upcoming")
+      ? "Upcoming"
+      : "Top rated";
+
   return (
-    <section className="max-w-[1440px] mx-auto px-20 pb-20">
-      <h1 className="text-2xl font-bold mb-10 capitalize">
-        {movieCategory.replace("_", " ")}
-      </h1>
-      <div className="grid grid-cols-5 gap-8">
-        {popularMovieResults.slice(0, 20).map((movie) => (
-          <Link key={movie.id} href={`/detail/${movie.id}`}>
-            <div className="bg-[#F4F4F5] rounded-lg">
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                className="w-full aspect-[2/3] object-cover rounded-lg
-                           hover:scale-105 transition"
-              />
-              <div className="p-2">
-                <p className="flex items-center gap-1 text-sm">
-                  ⭐ {movie.vote_average.toFixed(1)} /10
-                </p>
-                <p className="text-sm font-medium mt-1 line-clamp-2">
-                  {movie.title}
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
+    <div className="flex flex-col min-h-screen p-4 gap-5">
+      <div className="w-full max-w-97.5 mx-auto md:max-w-300">
+        <div className="flex flex-col gap-6 ">
+          <p className="text-[20px] font-semibold">{title}</p>
+          <div
+            className="
+              grid
+              grid-cols-2
+              gap-5
+              md:grid-cols-4
+              lg:grid-cols-5
+            "
+          >
+            {movies?.results?.map((films: any) => (
+              <Link key={films.id} href={`/movie/${films.id}`}>
+                <div className="rounded-lg overflow-hidden bg-white shadow-md hover:scale-105 transition-transform duration-200">
+                  <div className="relative w-full aspect-[2/3]">
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${films.poster_path}`}
+                      alt={films.original_title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <div className="bg-gray-200 p-2">
+                    <div className="flex items-center gap-1 mb-1">
+                      <Image
+                        src="/Star.png"
+                        alt="star"
+                        width={12}
+                        height={12}
+                      />
+                      <span className="text-[11px]">
+                        {films.vote_average?.toFixed(1)}
+                      </span>
+                      <span className="opacity-50 text-[11px]">/10</span>
+                    </div>
+
+                    <p className="text-[12px] font-medium truncate">
+                      {films.original_title}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          totalPage={movies?.total_pages > 500 ? 500 : movies?.total_pages || 1}
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

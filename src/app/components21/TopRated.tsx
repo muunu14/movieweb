@@ -1,13 +1,18 @@
 import Link from "next/link";
-import { movieAPI, Movie } from "@/app/components21/SectionAPI";
+import { movieApi } from "../../../utils/detailsTMDB";
+
 import { SeeMore } from "../components/SeeMore";
 
+type Movie = {
+  id: number;
+  poster_path: string;
+  title: string;
+  vote_average: number;
+};
+
 export const TopRated = async () => {
-  const {
-    popularMovieResults,
-  }: {
-    popularMovieResults: Movie[];
-  } = await movieAPI("top_rated");
+  const data = await movieApi("top_rated");
+  const popularMovieResults: Movie[] = data?.results ?? [];
 
   return (
     <div className="w-full px-4 sm:px-8 lg:px-20 py-10">
@@ -18,6 +23,7 @@ export const TopRated = async () => {
           <SeeMore />
         </Link>
       </div>
+
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 pb-10">
         {popularMovieResults.slice(0, 10).map((info) => (
           <Link key={info.id} href={`/detail/${info.id}`}>

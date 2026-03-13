@@ -11,7 +11,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import { seeMovieTrailer } from "@/utils/seeMovieTrailer";
+import { seeMovieTrailer } from "../../../utils/seeMovieTrailer";
 
 type Movie = {
   id: number;

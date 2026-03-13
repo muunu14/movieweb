@@ -1,10 +1,17 @@
 import Link from "next/link";
-import { movieAPI, Movie } from "@/app/components21/SectionAPI";
+import { movieApi } from "../../../utils/detailsTMDB"; // жижиг a
 import { SeeMore } from "../components/SeeMore";
 
+type Movie = {
+  id: number;
+  poster_path: string;
+  title: string;
+  vote_average: number;
+};
+
 export const Popular = async () => {
-  const { popularMovieResults }: { popularMovieResults: Movie[] } =
-    await movieAPI("popular");
+  const data = await movieApi("popular"); // ✔ зөв нэр
+  const popularMovieResults: Movie[] = data?.results ?? [];
 
   return (
     <div className="w-full px-4 sm:px-8 lg:px-20 py-10">
@@ -23,13 +30,12 @@ export const Popular = async () => {
               <img
                 src={`https://image.tmdb.org/t/p/w500${info.poster_path}`}
                 alt={info.title}
-                className="w-full h-[320px] sm:h-[340px] md:h-[360px] object-cover hover:scale-105 transition-transform duration-300"
+                className="w-full h-[320px] object-cover"
               />
 
               <div className="p-3">
                 <p className="flex items-center gap-1 text-sm">
-                  <img src="/Star.png" alt="" className="h-4 w-4" />
-                  {info.vote_average.toFixed(1)}
+                  ⭐ {info.vote_average.toFixed(1)}
                   <span className="text-gray-500 text-xs">/10</span>
                 </p>
 
